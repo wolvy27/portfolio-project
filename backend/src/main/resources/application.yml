@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: backend
+  
+  # Database Configuration (Connects to Docker)
+  datasource:
+    url: jdbc:postgresql://localhost:5432/portfolio_db
+    username: logan
+    password: password
+    driver-class-name: org.postgresql.Driver
+  
+  # Automatically creates tables based on Java entities
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+# Custom MinIO Configuration
+minio:
+  url: https://nixos-pi.tailf2f969.ts.net
+  bucket: portfolio-assets
+  access-key: QEUC9UU3V7JCDHN4SBU5  
+  secret-key: tigOAY0iJU2S0TqHQDZAW80nDwu57SdV8G7hl2ad
