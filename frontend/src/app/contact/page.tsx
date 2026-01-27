@@ -29,6 +29,8 @@ export default function ContactPage() {
           </div>
         </div>
 
+        <br/> {/* Temporary fix for spacing, will change as soon as possible */}
+
         {/* Right Side: The Form */}
         <div className="bg-[#0f0f0f] border border-stone-800 p-6 rounded-lg">
           <form className="flex flex-col gap-4">
