@@ -1,3 +1,5 @@
+package com.example.backend.utils;
+
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 

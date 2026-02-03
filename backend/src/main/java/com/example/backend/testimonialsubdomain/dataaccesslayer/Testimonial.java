@@ -1,10 +1,13 @@
 package com.example.backend.testimonialsubdomain.dataaccesslayer;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "testimonials")
@@ -22,8 +25,14 @@ public class Testimonial {
     private String endorserFirstName;
     private String endorserLastName;
     private String endorserEmailAddress;
+    private String companyRole;
 
-    private String content; // should enforce a character limit at the service layer
+    @Column(columnDefinition = "TEXT")
+    private String content;
     // should create custom exceptions for these validations
+
+    private boolean isApproved;
+
+    private LocalDateTime receivedAt;
     
 }

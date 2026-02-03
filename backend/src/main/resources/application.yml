@@ -24,3 +24,8 @@ minio:
   bucket: portfolio-assets
   access-key: QEUC9UU3V7JCDHN4SBU5  
   secret-key: tigOAY0iJU2S0TqHQDZAW80nDwu57SdV8G7hl2ad
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB

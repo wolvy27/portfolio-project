@@ -1,23 +1,27 @@
 package com.example.backend.testimonialsubdomain.dataaccesslayer;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.persistence.Embeddable;
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.UUID;
 
-
 @Embeddable
-@Data
+@Getter
 public class TestimonialIdentifier {
+
     private String testimonialId;
 
-    public TestimonialIdentifier(String testimonialId) { this.testimonialId = testimonialId; }
+    public TestimonialIdentifier() {
+        this.testimonialId = UUID.randomUUID().toString();
+    }
 
-    public TestimonialIdentifier() { this.testimonialId = UUID.randomUUID().toString(); }
+    public TestimonialIdentifier(String testimonialId) {
+        this.testimonialId = testimonialId;
+    }
 
+    public TestimonialIdentifier(boolean generate) {
+        if (generate) {
+            this.testimonialId = UUID.randomUUID().toString();
+        }
+    }
 }
