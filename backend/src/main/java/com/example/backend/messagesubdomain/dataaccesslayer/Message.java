@@ -30,4 +30,6 @@ public class Message {
     private LocalDateTime receivedAt;
 
     private boolean isRead;
+
+    private String faxNumber;
 }

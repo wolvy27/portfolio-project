@@ -1,0 +1,79 @@
+{
+    "Navbar": {
+        "Projects": "Projets",
+        "Experience": "Expérience",
+        "About": "À Propos",
+        "Testimonials": "Témoignages",
+        "Contact": "Contact"
+    },
+    "Home": {
+        "Title": "Concevoir des logiciels fiables en privilégiant la simplicité.",
+        "Description": "Je suis Logan, étudiant en finissant en Technologie de l'Informatique basé au Québec avec un vif intérêt pour les systèmes backend et NixOS.",
+        "ViewWork": "Voir mes projets",
+        "DownloadResume": "Télécharger CV"
+    },
+    "About": {
+        "Title": "À Propos de Moi",
+        "HobbiesTitle": "Loisirs et Intérêts",
+        "P1": "Je suis animé par une curiosité constante pour les nouvelles technologies. Que ce soit pour affiner ma configuration de laboratoire à domicile ou plonger dans un nouvel écosystème de programmation, je cherche toujours à élargir mes horizons techniques.",
+        "P2": "Lorsque je m'éloigne du clavier, je suis un lecteur avide de fiction spéculative et un fervent supporter des Canadiens de Montréal (sur les faits saillants YouTube). Je suis également un adepte du thé vert et du miel plutôt que du café.",
+        "SkillsTitle": "Compétences Techniques",
+        "Loading": "Chargement des compétences...",
+        "NoSkills": "Aucune compétence listée pour le moment."
+    },
+    "Projects": {
+        "Title": "Projets",
+        "Subtitle": "Une sélection de mes réalisations.",
+        "Loading": "Chargement des projets...",
+        "NoProjects": "Aucun projet déployé trouvé.",
+        "LiveDemo": "DÉMO LIVE ↗",
+        "SourceCode": "CODE SOURCE ↗"
+    },
+    "Experience": {
+        "Title": "Expérience",
+        "Subtitle": "Mon parcours académique et professionnel.",
+        "Loading": "Chargement de l'historique...",
+        "WorkHistory": "Expérience de Travail",
+        "Education": "Éducation",
+        "NoWork": "Aucune expérience de travail ajoutée pour le moment.",
+        "NoEducation": "Aucune éducation ajoutée pour le moment.",
+        "Present": "Présent"
+    },
+    "Testimonials": {
+        "Title": "Témoignages",
+        "Subtitle": "Ce que les gens disent de mon travail.",
+        "Loading": "Chargement des témoignages...",
+        "NoTestimonials": "Aucun témoignage pour le moment. Soyez le premier !",
+        "LeaveTestimonial": "Laisser un témoignage",
+        "SuccessTitle": "Merci pour vos commentaires !",
+        "SuccessMsg": "Votre témoignage apparaîtra bientôt.",
+        "SubmitAnother": "En soumettre un autre",
+        "ErrorMsg": "Échec de l'envoi. Veuillez réessayer.",
+        "SubmitButton": "Soumettre le témoignage",
+        "Submitting": "Envoi en cours...",
+        "PH_FirstName": "Prénom",
+        "PH_LastName": "Nom",
+        "PH_Email": "Email (Privé)",
+        "PH_Role": "Rôle / Entreprise",
+        "PH_Message": "Votre message..."
+    },
+    "Contact": {
+        "Title": "Me Contacter",
+        "Description": "Je suis activement à la recherche de nouvelles opportunités en développement logiciel. Si vous avez des questions concernant mon expérience, mes compétences techniques ou des collaborations potentielles, n'hésitez pas à me contacter via le formulaire ou les coordonnées fournies.",
+        "Label_Email": "EMAIL :",
+        "Label_Github": "GITHUB :",
+        "Label_Linkedin": "LINKEDIN :",
+        "SuccessTitle": "Message Envoyé !",
+        "SuccessMsg": "Merci de m'avoir contacté. Je vous répondrai sous peu.",
+        "SendAnother": "Envoyer un autre message",
+        "Label_Name": "Nom",
+        "Label_FormEmail": "Email",
+        "Label_Message": "Message",
+        "PH_Name": "Jean Dupont",
+        "PH_Email": "jean@exemple.com",
+        "PH_Message": "Votre message...",
+        "ErrorMsg": "Échec de l'envoi du message. Veuillez réessayer.",
+        "SendButton": "Envoyer le Message",
+        "Sending": "Envoi en cours..."
+    }
+}

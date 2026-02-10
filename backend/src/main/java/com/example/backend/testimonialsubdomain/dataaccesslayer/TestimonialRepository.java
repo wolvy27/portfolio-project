@@ -10,4 +10,7 @@ public interface TestimonialRepository extends JpaRepository<Testimonial, Intege
 
     // Boolean finder
     List<Testimonial> findAllByIsApproved(boolean isApproved);
+
+    // Boolean finder other way around
+    long countTestimonialByIsApprovedFalse();
 }

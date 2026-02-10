@@ -24,4 +24,6 @@ public class TestimonialRequestDTO {
 
     @NotBlank(message = "Content is required")
     private String content;
+
+    private String faxNumber;
 }

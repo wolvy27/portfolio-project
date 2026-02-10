@@ -18,6 +18,18 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: kairnslogan@gmail.com
+    password: ycbc rrtb gnbb spqs
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 # Custom MinIO Configuration
 minio:
   url: https://nixos-pi.tailf2f969.ts.net
@@ -29,3 +41,7 @@ minio:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+
+app:
+  admin:
+    email: kairnslogan@gmail.com

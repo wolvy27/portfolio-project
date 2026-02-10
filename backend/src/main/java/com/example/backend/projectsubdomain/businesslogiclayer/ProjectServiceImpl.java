@@ -6,7 +6,7 @@ import com.example.backend.projectsubdomain.dataaccesslayer.ProjectRepository;
 import com.example.backend.projectsubdomain.datamapperlayer.ProjectResponseMapper;
 import com.example.backend.projectsubdomain.presentationlayer.ProjectRequestDTO;
 import com.example.backend.projectsubdomain.presentationlayer.ProjectResponseDTO;
-import com.example.backend.utils.exceptions.NotFoundException; // Assuming you have a custom exception package
+import com.example.backend.utils.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

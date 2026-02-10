@@ -19,8 +19,22 @@ public class ImageController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Map<String, String>> uploadImage(@RequestParam("file") MultipartFile file) {
-        String imageUrl = imageStorageService.uploadImage(file);
+    public ResponseEntity<Map<String, String>> uploadImage(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam(value = "filename", required = false) String filename) {
+        
+        String imageUrl = imageStorageService.uploadImage(file, filename);
         return ResponseEntity.ok(Collections.singletonMap("imageUrl", imageUrl));
+    }
+
+    @GetMapping("/{filename:.+}")
+    public ResponseEntity<byte[]> getImage(@PathVariable String filename) {
+        try (java.io.InputStream inputStream = imageStorageService.getImage(filename)) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(inputStream.readAllBytes());
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

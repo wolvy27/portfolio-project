@@ -34,5 +34,7 @@ public class Testimonial {
     private boolean isApproved;
 
     private LocalDateTime receivedAt;
+
+    private String faxNumber;
     
 }

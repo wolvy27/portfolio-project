@@ -20,5 +20,6 @@ public interface MessageResponseMapper {
     @Mapping(target = "messageIdentifier", ignore = true)
     @Mapping(target = "receivedAt", ignore = true)
     @Mapping(target = "read", ignore = true)
+    @Mapping(target = "faxNumber", ignore = true)
     Message requestDTOToEntity(MessageRequestDTO dto);
 }

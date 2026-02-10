@@ -1,6 +1,9 @@
 package com.example.backend.testimonialsubdomain.presentationlayer;
 
 import com.example.backend.testimonialsubdomain.businesslogiclayer.TestimonialService;
+import com.example.backend.utils.RateLimitingService;
+import io.github.bucket4j.Bucket;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.http.HttpStatus;
@@ -16,10 +19,12 @@ import java.util.List;
 public class TestimonialController {
 
     private final TestimonialService testimonialService;
+    private final RateLimitingService rateLimitingService;
     private static final String UUID_REGEX = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
 
-    public TestimonialController(TestimonialService testimonialService) {
+    public TestimonialController(TestimonialService testimonialService, RateLimitingService rateLimitingService) {
         this.testimonialService = testimonialService;
+        this.rateLimitingService = rateLimitingService;
     }
 
     // Public Endpoint (Only Approved)
@@ -35,8 +40,19 @@ public class TestimonialController {
     }
 
     @PostMapping
-    public ResponseEntity<TestimonialResponseDTO> createTestimonial(@RequestBody @Valid TestimonialRequestDTO requestDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(testimonialService.createTestimonial(requestDTO));
+    public ResponseEntity<String> submitTestimonial(@RequestBody TestimonialRequestDTO request, HttpServletRequest servletRequest) {
+
+        Bucket bucket = rateLimitingService.resolveBucket(servletRequest.getRemoteAddr());
+        if (!bucket.tryConsume(1)) {
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("Rate limit exceeded");
+        }
+
+        if (request.getFaxNumber() != null && !request.getFaxNumber().isEmpty()) {
+            return ResponseEntity.ok("Testimonial submitted for approval.");
+        }
+
+        testimonialService.createTestimonial(request);
+        return ResponseEntity.ok("Testimonial submitted for approval.");
     }
 
     // Update Status Endpoint

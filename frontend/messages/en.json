@@ -1,0 +1,79 @@
+{
+    "Navbar": {
+        "Projects": "Projects",
+        "Experience": "Experience",
+        "About": "About",
+        "Testimonials": "Testimonials",
+        "Contact": "Contact"
+    },
+    "Home": {
+        "Title": "Building reliable software with a focus on simplicity.",
+        "Description": "I'm Logan, a final-year Computer Science Technology student based in Quebec with a deep interest in backend systems and NixOS.",
+        "ViewWork": "View Work",
+        "DownloadResume": "Download Resume"
+    },
+    "About": {
+        "Title": "About Me",
+        "HobbiesTitle": "Hobbies & Interests",
+        "P1": "I am driven by a constant curiosity for new technologies. Whether it is refining my home lab setup or diving into a new programming ecosystem, I am always looking to expand my technical horizons.",
+        "P2": "When I step away from the keyboard, I am an avid reader of speculative fiction and a dedicated supporter of the Montreal Canadiens (on YouTube Game Highlights). I am also an advocate of green tea and honey over coffee.",
+        "SkillsTitle": "Technical Skills",
+        "Loading": "Loading skills...",
+        "NoSkills": "No skills listed yet."
+    },
+    "Projects": {
+        "Title": "Projects",
+        "Subtitle": "A selection of things I've built.",
+        "Loading": "Loading projects...",
+        "NoProjects": "No deployed projects found.",
+        "LiveDemo": "LIVE DEMO ↗",
+        "SourceCode": "SOURCE CODE ↗"
+    },
+    "Experience": {
+        "Title": "Experience",
+        "Subtitle": "My academic and professional journey.",
+        "Loading": "Loading history...",
+        "WorkHistory": "Work History",
+        "Education": "Education",
+        "NoWork": "No work history added yet.",
+        "NoEducation": "No education history added yet.",
+        "Present": "Present"
+    },
+    "Testimonials": {
+        "Title": "Testimonials",
+        "Subtitle": "What people say about working with me.",
+        "Loading": "Loading testimonials...",
+        "NoTestimonials": "No testimonials yet. Be the first!",
+        "LeaveTestimonial": "Leave a Testimonial",
+        "SuccessTitle": "Thanks for the feedback!",
+        "SuccessMsg": "Your testimonial will appear shortly.",
+        "SubmitAnother": "Submit another",
+        "ErrorMsg": "Failed to submit. Please try again.",
+        "SubmitButton": "Submit Testimonial",
+        "Submitting": "Submitting...",
+        "PH_FirstName": "First Name",
+        "PH_LastName": "Last Name",
+        "PH_Email": "Email (Private)",
+        "PH_Role": "Role / Company (e.g. CTO @ Google)",
+        "PH_Message": "Your message..."
+    },
+    "Contact": {
+        "Title": "Get in touch",
+        "Description": "I am actively seeking new opportunities in software development. If you have any inquiries regarding my experience, technical skills, or potential collaborations, please feel free to reach out using the form or the contact details provided.",
+        "Label_Email": "EMAIL:",
+        "Label_Github": "GITHUB:",
+        "Label_Linkedin": "LINKEDIN:",
+        "SuccessTitle": "Message Sent!",
+        "SuccessMsg": "Thanks for reaching out. I'll get back to you shortly.",
+        "SendAnother": "Send another message",
+        "Label_Name": "Name",
+        "Label_FormEmail": "Email",
+        "Label_Message": "Message",
+        "PH_Name": "John Doe",
+        "PH_Email": "john@example.com",
+        "PH_Message": "Your message...",
+        "ErrorMsg": "Failed to send message. Please try again.",
+        "SendButton": "Send Message",
+        "Sending": "Sending..."
+    }
+}

@@ -39,6 +39,10 @@ public class TestimonialServiceImpl implements TestimonialService {
     @Override
     @Transactional
     public TestimonialResponseDTO createTestimonial(TestimonialRequestDTO requestDTO) {
+        long pendingCount = testimonialRepository.countTestimonialByIsApprovedFalse();
+        if (pendingCount >= 50) {
+            throw new RuntimeException("Submission queue full. Please try again later.");
+        }
         Testimonial testimonial = testimonialResponseMapper.requestDTOToEntity(requestDTO);
 
         testimonial.setTestimonialIdentifier(new TestimonialIdentifier(true));

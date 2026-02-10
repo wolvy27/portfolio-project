@@ -24,13 +24,19 @@ public class ImageStorageService {
         this.minioClient = minioClient;
     }
 
-    public String uploadImage(MultipartFile file) {
+    public String uploadImage(MultipartFile file, String customFilename) {
         try {
-            String originalFilename = file.getOriginalFilename();
-            String extension = originalFilename != null && originalFilename.contains(".")
-                    ? originalFilename.substring(originalFilename.lastIndexOf("."))
-                    : "";
-            String objectName = UUID.randomUUID().toString() + extension;
+            String objectName;
+            
+            if (customFilename != null && !customFilename.isEmpty()) {
+                objectName = customFilename;
+            } else {
+                String originalFilename = file.getOriginalFilename();
+                String extension = originalFilename != null && originalFilename.contains(".")
+                        ? originalFilename.substring(originalFilename.lastIndexOf("."))
+                        : "";
+                objectName = UUID.randomUUID().toString() + extension;
+            }
 
             try (InputStream inputStream = file.getInputStream()) {
                 minioClient.putObject(
@@ -52,6 +58,24 @@ public class ImageStorageService {
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to upload image to MinIO", e);
+        }
+    }
+    
+    // Overload for backward compatibility if needed, distinct from the one above
+    public String uploadImage(MultipartFile file) {
+        return uploadImage(file, null);
+    }
+
+    public InputStream getImage(String objectName) {
+        try {
+            return minioClient.getObject(
+                    io.minio.GetObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(objectName)
+                            .build()
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get image from MinIO", e);
         }
     }
 }

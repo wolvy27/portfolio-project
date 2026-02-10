@@ -27,5 +27,6 @@ public interface TestimonialResponseMapper {
     @Mapping(target = "testimonialIdentifier", ignore = true)
     @Mapping(target = "approved", ignore = true) // Set manually in service
     @Mapping(target = "receivedAt", ignore = true) // Set manually in service
+    @Mapping(target = "faxNumber", ignore = true) // bot ahh
     Testimonial requestDTOToEntity(TestimonialRequestDTO dto);
 }

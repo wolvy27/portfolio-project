@@ -10,6 +10,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration; // Import
+import org.springframework.web.cors.CorsConfigurationSource; // Import
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource; // Import
+
+import java.util.List; // Import
 
 @Configuration
 @EnableWebSecurity
@@ -22,19 +27,24 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless APIs
+                // Configure endpoint security
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // PUBLIC Endpoints (Everyone can see these)
+                        // Public Endpoints
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/projects/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/experiences/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/skills/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/testimonials/approved").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/settings/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/messages/**").permitAll() // Public contact form
-                        .requestMatchers(HttpMethod.POST, "/api/testimonials/**").permitAll() // Public testimonial submission
+                        .requestMatchers(HttpMethod.POST, "/api/messages/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/testimonials/**").permitAll()
+                        // Allow public download of images/resumes
+                        .requestMatchers(HttpMethod.GET, "/api/images/**").permitAll()
 
-                        // ADMIN Endpoints (Everything else needs a Token)
+                        // Admin Endpoints
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -42,5 +52,27 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    // CORS Configuration
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        // Who is allowed?
+        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+
+        // What can they do?
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+
+        // What passes can they show?
+        configuration.setAllowedHeaders(List.of("*"));
+
+        // Can they show ID? (Cookies/Auth headers)
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

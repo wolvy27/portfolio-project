@@ -1,71 +1,116 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { api, MessageResponseDTO } from "../../../api/api";
+
 export default function AdminMessages() {
-  const messages = [
-    { id: 1, sender: "Recruiter A", email: "jobs@tech.com", subject: "Job Opportunity", date: "Oct 24", read: false },
-    { id: 2, sender: "Dave", email: "dave@gmail.com", subject: "NixOS Question", date: "Oct 20", read: true },
-  ];
+    const [messages, setMessages] = useState<MessageResponseDTO[]>([]);
+    const [loading, setLoading] = useState(true);
 
-  return (
-    <div className="h-[calc(100vh-140px)] flex flex-col">
-      <div className="mb-6 flex justify-between items-end border-b border-stone-800 pb-6">
-         <div>
-            <h1 className="text-3xl font-bold text-white font-mono">Inbox</h1>
-            <p className="text-stone-500 mt-2 text-sm">Direct messages from the contact form.</p>
-         </div>
-         <span className="text-emerald-500 font-mono text-sm bg-emerald-900/10 border border-emerald-900/50 px-3 py-1 rounded">
-             1 Unread
-         </span>
-      </div>
+    useEffect(() => {
+        fetchMessages();
+    }, []);
 
-      {/* EMAIL CLIENT UI */}
-      <div className="flex-1 bg-[#0f0f0f] border border-stone-800 rounded-lg overflow-hidden flex flex-col">
-        
-        {/* Header Row */}
-        <div className="bg-stone-900 border-b border-stone-800 p-4 grid grid-cols-12 text-xs font-bold text-stone-500 uppercase tracking-widest font-mono">
-            <div className="col-span-3">Sender</div>
-            <div className="col-span-6">Subject</div>
-            <div className="col-span-2">Date</div>
-            <div className="col-span-1 text-right">Action</div>
-        </div>
+    const fetchMessages = async () => {
+        try {
+            const data = await api.messages.getAll();
+            // Sort by receivedAt descending (newest first)
+            const sorted = data.sort((a, b) => new Date(b.receivedAt).getTime() - new Date(a.receivedAt).getTime());
+            setMessages(sorted);
+        } catch (error) {
+            console.error("Failed to fetch messages", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-        {/* Message List */}
-        <div className="overflow-y-auto flex-1">
-            {messages.map((msg) => (
-                <div 
-                    key={msg.id} 
-                    className={`grid grid-cols-12 p-4 border-b border-stone-800 hover:bg-stone-800/50 transition cursor-pointer items-center ${
-                        !msg.read ? 'bg-stone-900/30' : ''
-                    }`}
-                >
-                    <div className={`col-span-3 text-sm font-mono truncate pr-4 ${!msg.read ? 'text-white font-bold' : 'text-stone-400'}`}>
-                        {msg.sender}
-                        <span className="block text-xs text-stone-600 font-normal">{msg.email}</span>
-                    </div>
-                    
-                    <div className={`col-span-6 text-sm truncate ${!msg.read ? 'text-stone-200' : 'text-stone-500'}`}>
-                        {msg.subject} 
-                        <span className="text-stone-600"> - Hello, I saw your portfolio and...</span>
-                    </div>
-                    
-                    <div className="col-span-2 text-xs text-stone-500 font-mono">
-                        {msg.date}
-                    </div>
+    const handleMarkAsRead = async (id: string) => {
+        try {
+            await api.messages.markAsRead(id);
+            // Optimistic update
+            setMessages(prev => prev.map(m => m.messageId === id ? { ...m, read: true } : m));
+        } catch (error) {
+            console.error("Failed to mark as read", error);
+            alert("Failed to update status.");
+        }
+    };
 
-                    <div className="col-span-1 text-right">
-                        <button className="text-stone-600 hover:text-red-400 transition" title="Delete">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                        </button>
-                    </div>
+    const handleDelete = async (id: string) => {
+        if (!confirm("Are you sure you want to delete this message?")) return;
+        try {
+            await api.messages.delete(id);
+            setMessages(prev => prev.filter(m => m.messageId !== id));
+        } catch (error) {
+            console.error("Failed to delete message", error);
+            alert("Failed to delete.");
+        }
+    };
+
+    if (loading) return <div className="text-stone-500 font-mono animate-pulse">Loading messages...</div>;
+
+    return (
+        <div className="w-full max-w-[1600px]">
+            <div className="mb-10 border-b border-stone-800 pb-6 flex items-center justify-between">
+                <div>
+                    <h1 className="text-3xl font-bold text-white font-mono">Messages</h1>
+                    <p className="text-stone-500 mt-2 text-sm">Inbox from Contact Form.</p>
                 </div>
-            ))}
-        </div>
+                <div className="bg-stone-900 px-4 py-2 rounded text-xs font-mono text-stone-400">
+                    {messages.filter(m => !m.read).length} Unread
+                </div>
+            </div>
 
-        {/* Footer Status Bar */}
-        <div className="bg-[#0a0a0a] border-t border-stone-800 p-2 text-right">
-            <p className="text-xs text-stone-600 font-mono">2 messages total • 5KB used</p>
+            <div className="space-y-4">
+                {messages.length === 0 ? (
+                    <div className="text-stone-500 italic">No messages found.</div>
+                ) : (
+                    messages.map((msg) => (
+                        <div
+                            key={msg.messageId}
+                            className={`bg-[#0f0f0f] border rounded-lg p-6 transition-all ${msg.read ? "border-stone-800 opacity-75" : "border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]"
+                                }`}
+                        >
+                            <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-4">
+                                <div>
+                                    <div className="flex items-center gap-3">
+                                        <h3 className="text-lg font-bold text-white">{msg.senderName}</h3>
+                                        {!msg.read && (
+                                            <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded uppercase font-bold tracking-wider">New</span>
+                                        )}
+                                    </div>
+                                    <a href={`mailto:${msg.senderEmail}`} className="text-stone-400 text-sm hover:text-white transition underline decoration-stone-700">
+                                        {msg.senderEmail}
+                                    </a>
+                                </div>
+                                <div className="text-xs text-stone-500 font-mono whitespace-nowrap">
+                                    {new Date(msg.receivedAt).toLocaleDateString()} at {new Date(msg.receivedAt).toLocaleTimeString()}
+                                </div>
+                            </div>
+
+                            <div className="bg-[#0a0a0a] p-4 rounded border border-stone-800 text-stone-300 text-sm whitespace-pre-wrap mb-4">
+                                {msg.messageBody}
+                            </div>
+
+                            <div className="flex justify-end gap-3 border-t border-stone-800 pt-4">
+                                {!msg.read && (
+                                    <button
+                                        onClick={() => handleMarkAsRead(msg.messageId)}
+                                        className="text-emerald-500 hover:text-emerald-400 text-xs font-bold uppercase tracking-wider"
+                                    >
+                                        Mark as Read
+                                    </button>
+                                )}
+                                <button
+                                    onClick={() => handleDelete(msg.messageId)}
+                                    className="text-stone-500 hover:text-red-500 text-xs font-bold uppercase tracking-wider ml-4"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }

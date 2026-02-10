@@ -42,8 +42,15 @@ public class SystemSettingServiceImpl implements SystemSettingService {
     @Override
     public SystemSettingResponseDTO updateSetting(String key, SystemSettingRequestDTO requestDTO) {
         SystemSetting setting = repository.findById(key)
-                .orElseThrow(() -> new NotFoundException("Setting not found: " + key));
-        SystemSetting updated = mapper.updateEntityFromRequest(requestDTO, setting);
-        return mapper.entityToResponseDTO(repository.save(updated));
+                .orElse(new SystemSetting()); // Create new if not found
+        
+        if (setting.getSettingKey() == null) {
+            setting.setSettingKey(key);
+        }
+
+        setting.setSettingValue(requestDTO.getSettingValue());
+        setting.setDescription(requestDTO.getDescription());
+        
+        return mapper.entityToResponseDTO(repository.save(setting));
     }
 }

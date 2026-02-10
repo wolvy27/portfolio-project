@@ -1,6 +1,7 @@
 package com.example.backend.utils;
 
 import com.example.backend.utils.exceptions.NotFoundException;
+import com.example.backend.utils.exceptions.TestimonialQueueFullException;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
@@ -13,12 +14,11 @@ import java.time.ZonedDateTime;
 import com.example.backend.utils.HttpErrorInfo;
 import com.example.backend.utils.exceptions.TestimonialCharacterLimitException;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
 
 import com.example.backend.utils.HttpErrorInfo;
 import com.example.backend.utils.exceptions.TestimonialCharacterLimitException;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 @Slf4j
@@ -35,6 +35,12 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public HttpErrorInfo handleNotFoundException(WebRequest request, Exception ex) {
         return createHttpErrorInfo(NOT_FOUND, request, ex);
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(TestimonialQueueFullException.class)
+    public HttpErrorInfo handleTestimonialQueueFullException(WebRequest request, Exception ex) {
+        return  createHttpErrorInfo(CONFLICT, request, ex);
     }
         
     private HttpErrorInfo createHttpErrorInfo(HttpStatus httpStatus, WebRequest request, Exception ex) {
