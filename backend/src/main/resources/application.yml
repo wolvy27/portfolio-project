@@ -2,11 +2,11 @@ spring:
   application:
     name: backend
   
-  # Database Configuration (Connects to Docker)
+  # Database Configuration (Connects to Docker or Neon)
   datasource:
-    url: jdbc:postgresql://localhost:5432/portfolio_db
-    username: logan
-    password: password
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${POSTGRES_DB:portfolio_db}
+    username: ${POSTGRES_USER:logan}
+    password: ${POSTGRES_PASSWORD:password}
     driver-class-name: org.postgresql.Driver
   
   # Automatically creates tables based on Java entities
@@ -21,8 +21,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: kairnslogan@gmail.com
-    password: ycbc rrtb gnbb spqs
+    username: ${MAIL_USERNAME:kairnslogan@gmail.com}
+    password: ${MAIL_PASSWORD:ycbc rrtb gnbb spqs}
     properties:
       mail:
         smtp:
@@ -32,10 +32,10 @@ spring:
 
 # Custom MinIO Configuration
 minio:
-  url: https://nixos-pi.tailf2f969.ts.net
-  bucket: portfolio-assets
-  access-key: QEUC9UU3V7JCDHN4SBU5  
-  secret-key: tigOAY0iJU2S0TqHQDZAW80nDwu57SdV8G7hl2ad
+  url: ${MINIO_URL:https://nixos-pi.tailf2f969.ts.net}
+  bucket: ${MINIO_BUCKET:portfolio-assets}
+  access-key: ${MINIO_ACCESS_KEY:QEUC9UU3V7JCDHN4SBU5}
+  secret-key: ${MINIO_SECRET_KEY:tigOAY0iJU2S0TqHQDZAW80nDwu57SdV8G7hl2ad}
 
   servlet:
     multipart:
@@ -44,4 +44,4 @@ minio:
 
 app:
   admin:
-    email: kairnslogan@gmail.com
+    email: ${ADMIN_EMAIL:kairnslogan@gmail.com}
