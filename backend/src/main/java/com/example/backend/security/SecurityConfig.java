@@ -60,7 +60,11 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // Who is allowed?
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        String allowedOrigins = System.getenv("ALLOWED_ORIGINS");
+        if (allowedOrigins == null || allowedOrigins.isEmpty()) {
+            allowedOrigins = "http://localhost:3000"; // Default
+        }
+        configuration.setAllowedOrigins(List.of(allowedOrigins.split(",")));
 
         // What can they do?
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
