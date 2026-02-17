@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import "../globals.css";
 
@@ -15,12 +15,19 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
-  }, [pathname]);
+
+    // Auth Check
+    const token = localStorage.getItem("jwt_token");
+    if (!token && pathname !== "/admin/login") {
+      router.push("/admin/login");
+    }
+  }, [pathname, router]);
 
   // Login Page is special (fullscreen, no sidebar)
   if (pathname === "/admin/login") {
