@@ -21,7 +21,7 @@ export default function Home() {
 
           {/* Profile Image */}
           <img
-            src="https://s3.logankairns.com/me.jpg"
+            src="/api/images/logan_kairns.png"
             alt="Logan Kairns Face"
             className="w-32 h-32 md:w-40 md:h-40 shrink-0 rounded-full object-cover border-2 border-stone-800 bg-stone-900"
           />
