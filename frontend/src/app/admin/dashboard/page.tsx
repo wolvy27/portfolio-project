@@ -5,7 +5,7 @@ import { api } from "../../../api/api";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
-    newMessages: 0,
+    totalMessages: 0,
     pendingTestimonials: 0
   });
   const [loading, setLoading] = useState(true);
@@ -18,11 +18,11 @@ export default function AdminDashboard() {
           api.testimonials.getAll()
         ]);
 
-        const unreadMessages = messages.filter(m => !m.read).length;
+        const totalMessages = messages.length;
         const pendingTestimonials = testimonials.filter(t => !t.approved).length;
 
         setStats({
-          newMessages: unreadMessages,
+          totalMessages,
           pendingTestimonials
         });
       } catch (error) {
@@ -44,8 +44,8 @@ export default function AdminDashboard() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="bg-[#0f0f0f] border border-stone-800 p-6 rounded-lg">
-          <h3 className="text-xs font-bold text-stone-500 uppercase">New Messages</h3>
-          <p className="text-3xl font-bold text-emerald-400 mt-2">{stats.newMessages}</p>
+          <h3 className="text-xs font-bold text-stone-500 uppercase">Total Messages</h3>
+          <p className="text-3xl font-bold text-emerald-400 mt-2">{stats.totalMessages}</p>
         </div>
         <div className="bg-[#0f0f0f] border border-stone-800 p-6 rounded-lg">
           <h3 className="text-xs font-bold text-stone-500 uppercase">Pending Testimonials</h3>
