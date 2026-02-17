@@ -29,6 +29,11 @@ export default function AdminLayout({
     }
   }, [pathname, router]);
 
+  const handleLogout = () => {
+    localStorage.removeItem("jwt_token");
+    router.push("/portal/login");
+  };
+
   // Login Page is special (fullscreen, no sidebar)
   if (pathname === "/portal/login") {
     return (
@@ -80,7 +85,10 @@ export default function AdminLayout({
               })}
             </nav>
 
-            <button className="mt-auto flex items-center gap-2 text-sm text-red-400 hover:text-red-300 transition px-3 py-2">
+            <button
+              onClick={handleLogout}
+              className="mt-auto flex items-center gap-2 text-sm text-red-400 hover:text-red-300 transition px-3 py-2"
+            >
               <span>Log Out</span>
             </button>
           </aside>
@@ -140,7 +148,10 @@ export default function AdminLayout({
                 </nav>
 
                 <div className="mt-auto">
-                  <button className="w-full flex items-center justify-center gap-2 text-red-400 hover:text-red-300 transition px-4 py-3 rounded-md border border-stone-800 hover:bg-stone-900">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center justify-center gap-2 text-red-400 hover:text-red-300 transition px-4 py-3 rounded-md border border-stone-800 hover:bg-stone-900"
+                  >
                     <span>Log Out</span>
                   </button>
                 </div>
