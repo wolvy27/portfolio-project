@@ -34,6 +34,7 @@ public class ImageController {
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)
                     .body(inputStream.readAllBytes());
         } catch (Exception e) {
+            e.printStackTrace(); // Log the error to see why MinIO failed
             return ResponseEntity.notFound().build();
         }
     }
