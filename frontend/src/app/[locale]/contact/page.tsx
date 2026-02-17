@@ -43,7 +43,7 @@ export default function ContactPage() {
           <div className="flex flex-col gap-4 text-sm">
             <div className="flex items-center gap-3 text-stone-300">
               <span className="text-stone-600 font-mono">{t("Label_Email")}</span>
-              <a href="mailto:logankairns@outlook.com" className="hover:text-white transition">logan@example.com</a>
+              <a href="mailto:logankairns@outlook.com" className="hover:text-white transition">logan@outlook.com</a>
             </div>
             <div className="flex items-center gap-3 text-stone-300">
               <span className="text-stone-600 font-mono">{t("Label_Github")}</span>
