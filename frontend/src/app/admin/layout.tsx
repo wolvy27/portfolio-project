@@ -39,8 +39,8 @@ export default function AdminLayout({
     { name: "Experience", href: "/admin/experience" },
     { name: "Skills", href: "/admin/skills" },
     { name: "Testimonials", href: "/admin/testimonials" },
-    { name: "Messages", href: "/admin/messages" },
     { name: "Settings", href: "/admin/settings" },
+
   ];
 
   return (

@@ -18,15 +18,15 @@ public class AuthController {
     private final AuthenticationService service;
     private final RateLimitingService rateLimitingService;
 
-    @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody AuthRequest request, HttpServletRequest servletRequest) {
-        Bucket bucket = rateLimitingService.resolveBucket(servletRequest.getRemoteAddr());
-        if (!bucket.tryConsume(1)) {
-            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
-        }
-
-        return ResponseEntity.ok(service.register(request));
-    }
+//    @PostMapping("/register")
+//    public ResponseEntity<AuthResponse> register(@RequestBody AuthRequest request, HttpServletRequest servletRequest) {
+//        Bucket bucket = rateLimitingService.resolveBucket(servletRequest.getRemoteAddr());
+//        if (!bucket.tryConsume(1)) {
+//            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+//        }
+//
+//        return ResponseEntity.ok(service.register(request));
+//    }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request, HttpServletRequest servletRequest) {
