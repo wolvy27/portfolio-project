@@ -8,6 +8,11 @@ spring:
     username: ${POSTGRES_USER:logan}
     password: ${POSTGRES_PASSWORD:password}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      idle-timeout: 300000
+      max-lifetime: 300000 # 5 minutes (Prevents Neon timeout errors)
   
   # Automatically creates tables based on Java entities
   jpa:
