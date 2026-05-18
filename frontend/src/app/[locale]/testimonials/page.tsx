@@ -16,7 +16,8 @@ export default function TestimonialsPage() {
     lastName: "",
     email: "",
     companyRole: "",
-    content: ""
+    content: "",
+    faxNumber: ""
   });
   const [submitStatus, setSubmitStatus] = useState<"IDLE" | "SENDING" | "SUCCESS" | "ERROR">("IDLE");
 
@@ -44,10 +45,11 @@ export default function TestimonialsPage() {
         formData.lastName,
         formData.email,
         formData.content,
+        formData.faxNumber,
         formData.companyRole
       );
       setSubmitStatus("SUCCESS");
-      setFormData({ firstName: "", lastName: "", companyRole: "", content: "", email: "" });
+      setFormData({ firstName: "", lastName: "", companyRole: "", content: "", email: "", faxNumber: "" });
     } catch (error) {
       console.error("Failed to submit testimonial", error);
       setSubmitStatus("ERROR");
@@ -103,6 +105,17 @@ export default function TestimonialsPage() {
             </div>
           ) : (
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+              {/* Honeypot Input */}
+              <input
+                type="text"
+                name="faxNumber"
+                style={{ display: "none" }}
+                tabIndex={-1}
+                autoComplete="off"
+                value={formData.faxNumber}
+                onChange={e => setFormData({ ...formData, faxNumber: e.target.value })}
+              />
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input
                   type="text"

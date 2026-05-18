@@ -10,7 +10,8 @@ export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    message: ""
+    message: "",
+    faxNumber: ""
   });
   const [status, setStatus] = useState<"IDLE" | "SENDING" | "SUCCESS" | "ERROR">("IDLE");
 
@@ -19,9 +20,9 @@ export default function ContactPage() {
     setStatus("SENDING");
 
     try {
-      await api.messages.send(formData.name, formData.email, formData.message);
+      await api.messages.send(formData.name, formData.email, formData.message, formData.faxNumber);
       setStatus("SUCCESS");
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", email: "", message: "", faxNumber: "" });
     } catch (error) {
       console.error("Message failed", error);
       setStatus("ERROR");
@@ -74,6 +75,17 @@ export default function ContactPage() {
             </div>
           ) : (
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+
+              {/* Honeypot Input */}
+              <input
+                type="text"
+                name="faxNumber"
+                style={{ display: "none" }}
+                tabIndex={-1}
+                autoComplete="off"
+                value={formData.faxNumber}
+                onChange={e => setFormData({ ...formData, faxNumber: e.target.value })}
+              />
 
               <div className="flex flex-col gap-1">
                 <label htmlFor="name" className="text-xs font-bold text-stone-500 uppercase">{t("Label_Name")}</label>

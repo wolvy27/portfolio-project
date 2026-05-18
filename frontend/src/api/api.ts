@@ -77,14 +77,14 @@ export const api = {
     },
 
     // Public: Submit a testimonial
-    submit: async (firstName: string, lastName: string, email: string, content: string, companyRole?: string) => {
+    submit: async (firstName: string, lastName: string, email: string, content: string, faxNumber: string, companyRole?: string) => {
       const payload: TestimonialRequestDTO = {
         firstName,
         lastName,
         email,
         companyRole,
         content,
-        faxNumber: "" // <--- TRAP SET
+        faxNumber
       };
       return axiosClient.post("/api/testimonials", payload);
     },
@@ -103,12 +103,12 @@ export const api = {
 
   // Contact Messages
   messages: {
-    send: async (senderName: string, email: string, content: string) => {
+    send: async (senderName: string, email: string, content: string, faxNumber: string) => {
       const payload: MessageRequest = {
         senderName,
         email,
         content,
-        faxNumber: "" // <--- TRAP SET
+        faxNumber
       };
       return axiosClient.post("/api/messages", payload);
     },
